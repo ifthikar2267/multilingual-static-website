@@ -1,6 +1,7 @@
 {
-  "name": "web",
+  "name": "discover-saudi-website",
   "version": "0.1.0",
+  "description": "Multilingual static website for Discover Saudi with SSR, RTL support, and Material UI",
   "private": true,
   "scripts": {
     "dev": "next dev",
