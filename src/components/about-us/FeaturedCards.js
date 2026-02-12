@@ -6,16 +6,45 @@ import Typography from "@mui/material/Typography";
 
 import MarkdownText from "@/components/about-us/MarkdownText";
 
+/* ---------- Section Parser ---------- */
+const parseSections = (text = "") => {
+  const normalized = text.replace(/\\n/g, "\n");
+  const blocks = normalized.split(/(?=###)/g);
+
+  return blocks
+    .map((block) => {
+      const trimmed = block.trim();
+      if (!trimmed) return null;
+
+      if (trimmed.startsWith("###")) {
+        const withoutHashes = trimmed.replace(/^###\s*/, "");
+        const lines = withoutHashes.split("\n");
+
+        const title = lines.shift().trim();
+        const content = lines.join("\n").trim();
+
+        return { title, content };
+      }
+
+      return { title: null, content: trimmed };
+    })
+    .filter(Boolean);
+};
+/* ------------------------------------- */
+
 export default function FeaturedCards({ cards }) {
   if (!Array.isArray(cards) || cards.length === 0) return null;
 
   return (
-    <Box component="section">
-      <Grid container spacing={{ xs: 3, md: 4 }}>
+    <Box component="section" sx={{mb:5}}>
+      <Grid container spacing={{ xs: 3, md: 4 , mt: { xs: -6, md: -50 }}}>
         {cards
           .filter((c) => c?.enabled !== false)
           .map((card, idx) => {
-            const imageFirst = idx % 2 === 0;
+            const sections = parseSections(card?.description);
+
+            // Alternate layout
+            const textFirst = idx % 2 === 0;
 
             return (
               <Grid key={card.id || idx} item xs={12}>
@@ -27,11 +56,12 @@ export default function FeaturedCards({ cards }) {
                   }}
                 >
                   <Grid container>
+                    {/* Image */}
                     <Grid
                       item
                       xs={12}
                       md={6}
-                      order={{ xs: 0, md: imageFirst ? 0 : 1 }}
+                      order={{ xs: 0, md: textFirst ? 1 : 0 }}
                     >
                       <Box
                         sx={{
@@ -44,7 +74,11 @@ export default function FeaturedCards({ cards }) {
                         {card?.image?.url ? (
                           <Image
                             src={card.image.url}
-                            alt={card.image.alt || card.title || "Featured"}
+                            alt={
+                              card.image.alt ||
+                              card.title ||
+                              "Featured"
+                            }
                             fill
                             sizes="(max-width: 900px) 100vw, 50vw"
                             style={{ objectFit: "contain" }}
@@ -53,34 +87,64 @@ export default function FeaturedCards({ cards }) {
                       </Box>
                     </Grid>
 
+                    {/* Content */}
                     <Grid
                       item
                       xs={12}
                       md={6}
-                      order={{ xs: 1, md: imageFirst ? 1 : 0 }}
+                      order={{ xs: 1, md: textFirst ? 0 : 1 }}
                     >
                       <Box sx={{ p: { xs: 3, md: 4 } }}>
-                        {card?.title ? (
+                        {card?.title && (
                           <Typography
                             variant="h5"
                             sx={{
-                              letterSpacing: 0.2,
-                              fontWeight: 600,
-                              textAlign: "start",
-                              color:"#ca4608"
+                              fontFamily: "Gilroy-Bold",
+                              fontSize: "34px",
+                              fontWeight: 700,
+                              lineHeight: "52px",
+                              margin: "0 0 32px",
+                              color: "#E04E39",
                             }}
                           >
                             {card.title}
                           </Typography>
-                        ) : null}
+                        )}
 
                         <Box sx={{ mt: 1.5 }}>
-                          <MarkdownText
-                            text={card?.description}
-                            align="start"
-                            headingWeight={200}
-                            bodyWeight={400}
-                          />
+                          {sections.map((section, index) => (
+                            <Box key={index} sx={{ mb: 2 }}>
+                              {section.title && (
+                                <Typography
+                                  sx={{
+                                    fontFamily: "Gilroy-Semibold",
+                                    fontSize: "17px",
+                                    lineHeight: "24px",
+                                    fontWeight: 600,
+                                    color: "#333",
+                                    margin: "0 0 4px",
+                                  }}
+                                >
+                                  {section.title}
+                                </Typography>
+                              )}
+
+                              {section.content && (
+                                <Typography
+                                  sx={{
+                                    fontSize: "17px",
+                                    fontFamily: "Gilroy-Semibold",
+                                    color: "#333",
+                                    lineHeight: "24px",
+                                    margin: "0 0 16px",
+                                    whiteSpace: "pre-line",
+                                  }}
+                                >
+                                  {section.content}
+                                </Typography>
+                              )}
+                            </Box>
+                          ))}
                         </Box>
                       </Box>
                     </Grid>
@@ -93,4 +157,3 @@ export default function FeaturedCards({ cards }) {
     </Box>
   );
 }
-

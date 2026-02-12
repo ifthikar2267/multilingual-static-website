@@ -32,6 +32,7 @@ export default function LogoSection({ section }) {
             const img = logo?.image;
             if (!img?.url) return null;
 
+
             return (
               <Grid key={logo?.id || idx} item xs={6} sm={4} md={3} sx={{backgroundColor: "rgba(97, 75, 121, 0.2)"}}>
                 <Box
@@ -43,13 +44,16 @@ export default function LogoSection({ section }) {
                     justifyContent: "center",
                   }}
                 >
-                  <Image
+                  {section?.logos ? (
+                    <Image
                     src={img.url}
                     alt={img.alt || "Logo"}
                     fill
                     sizes="(max-width: 900px) 50vw, 25vw"
                     style={{ objectFit: "contain" }}
                   />
+                  ): <Box sx={{backgroundColor:"rgba(97, 75, 121, 0.2)"}}/>}
+                  
                 </Box>
               </Grid>
             );

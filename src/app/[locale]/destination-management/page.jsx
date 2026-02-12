@@ -4,6 +4,7 @@ import { getDmcRaw } from "@/services/dmcService";
 import { normalizeDmcResponse } from "@/utils/normalizeDmc";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 import DMCHero from "@/components/DMC/DMCHero";
 import FeaturedCards from "@/components/DMC/FeaturedCards";
 import SectionsRenderer from "@/components/DMC/SectionsRenderer";
@@ -77,14 +78,18 @@ export default async function DMCPage({ params }) {
   return (
     <Stack spacing={{ xs: 4, md: 7 }}>
       <DMCHero hero={data.hero} dir={dir} />
-
-      {data.featuredCards?.length ? (
+      <Box sx={{ width: '1200px',  margin: '0 auto !important', }}>
+        {data.featuredCards?.length ? (
         <FeaturedCards cards={data.featuredCards} />
       ) : null}
 
       {data.sections?.length ? (
         <SectionsRenderer sections={data.sections} />
       ) : null}
+
+      </Box>
+
+      
     </Stack>
   );
 }

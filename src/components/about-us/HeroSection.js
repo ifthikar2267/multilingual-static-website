@@ -17,7 +17,7 @@ export default function HeroSection({ hero, dir = "ltr" }) {
         position: "relative",
         overflow: "hidden",
         minHeight: { xs: 260, sm: 320, md: 520 },
-        width: "100%"
+        width: "100%",
       }}
     >
       {image?.url ? (

@@ -1,6 +1,7 @@
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import Container from "@mui/material/Container";
 
 import FeaturedCards from "@/components/about-us/FeaturedCards";
 import HeroSection from "@/components/about-us/HeroSection";
@@ -16,21 +17,26 @@ export default function AboutUsContent({ data, locale }) {
   const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
-     <Stack spacing={{ xs: 4, md: 7 }}>
+    <Stack spacing={{ xs: 4, md: 7 }}>
+      {/* Full width hero */}
       <HeroSection hero={data.hero} dir={dir} />
 
-      {data.featuredCards?.length ? (
-        <FeaturedCards cards={data.featuredCards} />
-      ) : null}
+      {/* Centered content */}
+      <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+        <Container>
+          {data.featuredCards?.length ? (
+            <FeaturedCards cards={data.featuredCards} />
+          ) : null}
 
-      <Box component="section">
-        <Stack>
-          {data.sections?.map((section) => (
-            <SectionRenderer key={section.id} section={section} />
-          ))}
-        </Stack>
+          <Box component="section">
+            <Stack>
+              {data.sections?.map((section) => (
+                <SectionRenderer key={section.id} section={section} />
+              ))}
+            </Stack>
+          </Box>
+        </Container>
       </Box>
     </Stack>
   );
 }
-
