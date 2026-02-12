@@ -1,6 +1,5 @@
 import "./globals.css";
 import { headers } from "next/headers";
-import Providers from "./providers";
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
@@ -18,9 +17,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
-      <body>
-        <Providers direction={dir}>{children}</Providers>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

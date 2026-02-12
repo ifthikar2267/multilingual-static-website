@@ -6,13 +6,12 @@ import Typography from "@mui/material/Typography";
 
 import MarkdownText from "@/components/about-us/MarkdownText";
 
-export default function FeaturedCards({ cards, locale }) {
-  const isRTL = locale === "ar";
+export default function FeaturedCards({ cards }) {
   if (!Array.isArray(cards) || cards.length === 0) return null;
 
   return (
     <Box component="section">
-      <Grid container spacing={{ xs: 3, md: 3 }}>
+      <Grid container spacing={{ xs: 3, md: 4 }}>
         {cards
           .filter((c) => c?.enabled !== false)
           .map((card, idx) => {
@@ -39,7 +38,7 @@ export default function FeaturedCards({ cards, locale }) {
                           position: "relative",
                           height: { xs: 240, sm: 320, md: "100%" },
                           minHeight: { md: 360 },
-                          bgcolor: "grey.100",
+                          bgcolor: "white",
                         }}
                       >
                         {card?.image?.url ? (
@@ -48,7 +47,7 @@ export default function FeaturedCards({ cards, locale }) {
                             alt={card.image.alt || card.title || "Featured"}
                             fill
                             sizes="(max-width: 900px) 100vw, 50vw"
-                            style={{ objectFit: "cover" }}
+                            style={{ objectFit: "contain" }}
                           />
                         ) : null}
                       </Box>
@@ -63,16 +62,24 @@ export default function FeaturedCards({ cards, locale }) {
                       <Box sx={{ p: { xs: 3, md: 4 } }}>
                         {card?.title ? (
                           <Typography
-                            variant="overline"
-                            sx={{ letterSpacing: 1.0, fontWeight: 800, fontSize: 40, color: "#ff5e00", textAlign: isRTL ? "right" : "left" }}
-                            
+                            variant="h5"
+                            sx={{
+                              letterSpacing: 0.2,
+                              fontWeight: 600,
+                              textAlign: "start",
+                            }}
                           >
                             {card.title}
                           </Typography>
                         ) : null}
 
                         <Box sx={{ mt: 1.5 }}>
-                          <MarkdownText text={card?.description} />
+                          <MarkdownText
+                            text={card?.description}
+                            align="start"
+                            headingWeight={600}
+                            bodyWeight={400}
+                          />
                         </Box>
                       </Box>
                     </Grid>

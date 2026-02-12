@@ -22,6 +22,13 @@ export function getAppTheme({ direction = "ltr" } = {}) {
           maxWidth: "lg",
         },
       },
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            textAlign: "start",
+          },
+        },
+      },
     },
   });
 }

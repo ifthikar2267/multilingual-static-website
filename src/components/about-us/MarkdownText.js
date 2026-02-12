@@ -10,7 +10,15 @@ function stripHeading(line) {
   return line.replace(/^###\s*/, "").trim();
 }
 
-export default function MarkdownText({ text }) {
+export default function MarkdownText({
+  text,
+  align = "start",
+  headingVariant = "h6",
+  bodyVariant = "body1",
+  headingWeight = 700,
+  bodyWeight = 400,
+  sx,
+}) {
   if (!text) return null;
 
   const blocks = String(text)
@@ -20,11 +28,15 @@ export default function MarkdownText({ text }) {
     .filter(Boolean);
 
   return (
-    <Stack spacing={1.25}>
+    <Stack spacing={1.25} sx={sx}>
       {blocks.map((block, idx) => {
         if (isHeading(block)) {
           return (
-            <Typography key={idx} variant="h6" sx={{ fontWeight: 800 }}>
+            <Typography
+              key={idx}
+              variant={headingVariant}
+              sx={{ fontWeight: headingWeight, textAlign: align }}
+            >
               {stripHeading(block)}
             </Typography>
           );
@@ -33,9 +45,9 @@ export default function MarkdownText({ text }) {
         return (
           <Typography
             key={idx}
-            variant="body1"
+            variant={bodyVariant}
             color="text.secondary"
-            sx={{ whiteSpace: "pre-line" }}
+            sx={{ whiteSpace: "pre-line", fontWeight: bodyWeight, textAlign: align }}
           >
             {block}
           </Typography>

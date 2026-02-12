@@ -37,16 +37,16 @@ export default function CardGrid({ section }) {
                   variant="outlined"
                   sx={{
                     overflow: "hidden",
-                    borderRadius: { xs: 3, md: 4 },
+                    borderRadius: { xs: 3, md: 2 },
                   }}
                 >
                   <Grid container>
                     {card?.image?.url ? (
-                      <Grid item xs={12} md={5}>
+                      <Grid item xs={12} md={12}>
                         <Box
                           sx={{
                             position: "relative",
-                            height: { xs: 220, sm: 260, md: 320 },
+                            height: { xs: 220, sm: 260, md: 400 },
                             bgcolor: "grey.100",
                           }}
                         >
@@ -61,18 +61,32 @@ export default function CardGrid({ section }) {
                       </Grid>
                     ) : null}
 
-                    <Grid item xs={12} md={card?.image?.url ? 7 : 12}>
-                      <Box sx={{ p: { xs: 3, md: 4 } }}>
+                    <Grid item xs={12} md={12}>
+                      <Box
+                        sx={{
+                          p: { xs: 3, md: 3 },
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          textAlign: "center",
+                        }}
+                      >
                         {card?.title ? (
                           <Typography
                             variant="h6"
-                            sx={{ fontWeight: 800, mb: 1 }}
+                            sx={{ fontWeight: 700, mb: 1, textAlign: "center" }}
                           >
                             {card.title}
                           </Typography>
                         ) : null}
 
-                        <MarkdownText text={card?.description} />
+                        <MarkdownText
+                          text={card?.description}
+                          align="center"
+                          headingWeight={600}
+                          bodyWeight={400}
+                        />
                       </Box>
                     </Grid>
                   </Grid>

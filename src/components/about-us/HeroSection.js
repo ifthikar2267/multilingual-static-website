@@ -1,9 +1,14 @@
 import Image from "next/image";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-export default function HeroSection({ hero }) {
+export default function HeroSection({ hero, dir = "ltr" }) {
   const image = hero?.image;
+  const gradient =
+    dir === "rtl"
+      ? "linear-gradient(270deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0) 100%)"
+      : "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0) 100%)";
 
   return (
     <Box
@@ -11,7 +16,9 @@ export default function HeroSection({ hero }) {
       sx={{
         position: "relative",
         overflow: "hidden",
-        minHeight: { xs: 260, sm: 320, md: 420 },
+        minHeight: { xs: 260, sm: 320, md: 520 },
+        width: "100vw",
+       
       }}
     >
       {image?.url ? (
@@ -20,8 +27,8 @@ export default function HeroSection({ hero }) {
           alt={image.alt || hero?.title || "About Us"}
           fill
           priority
-          sizes="(max-width: 900px) 100vw, 900px"
-          style={{ objectFit: "cover" }}
+          sizes="100vw"
+          style={{ objectFit: "cover", objectPosition: "center" }}
         />
       ) : (
         <Box sx={{ position: "absolute", inset: 0, bgcolor: "grey.200" }} />
@@ -31,8 +38,7 @@ export default function HeroSection({ hero }) {
         sx={{
           position: "absolute",
           inset: 0,
-          background:
-            "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0) 100%)",
+          background: gradient,
         }}
       />
 
@@ -42,31 +48,38 @@ export default function HeroSection({ hero }) {
           inset: 0,
           display: "flex",
           alignItems: "flex-end",
-          p: { xs: 3, md: 5 },
+          pb: { xs: 3, md: 5 },
         }}
       >
-        <Box sx={{ maxWidth: 720 }}>
-          <Typography
-            variant="h3"
-            sx={{
-              color: "common.white",
-              fontWeight: 300,
-              lineHeight: 1.1,
-              fontSize: { xs: 32, sm: 40, md: 52 },
-            }}
-          >
-            {hero?.title || "About Us"}
-          </Typography>
-
-          {hero?.subTitle ? (
+        <Container>
+          <Box sx={{ maxWidth: 720 }}>
             <Typography
-              variant="subtitle1"
-              sx={{ color: "rgba(255,255,255,0.9)", mt: 1.5 }}
+              variant="h3"
+              sx={{
+                color: "common.white",
+                fontWeight: 800,
+                lineHeight: 1.1,
+                fontSize: { xs: 32, sm: 40, md: 52 },
+                textAlign: "start",
+              }}
             >
-              {hero.subTitle}
+              {hero?.title || "About Us"}
             </Typography>
-          ) : null}
-        </Box>
+
+            {hero?.subTitle ? (
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  color: "rgba(255,255,255,0.9)",
+                  mt: 1.5,
+                  textAlign: "start",
+                }}
+              >
+                {hero.subTitle}
+              </Typography>
+            ) : null}
+          </Box>
+        </Container>
       </Box>
     </Box>
   );

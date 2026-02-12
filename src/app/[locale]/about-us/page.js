@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { isSupportedLocale } from "@/utils/i18n";
 import { getAboutUsRaw } from "@/services/aboutUsService";
 import { normalizeAboutUsResponse } from "@/utils/normalizeAboutUs";
-import AboutUsPageClient from "@/components/about-us/AboutUsPageClient";
+import AboutUsContent from "@/components/about-us/AboutUsContent";
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +40,6 @@ export default async function AboutUsPage({ params }) {
   const raw = await getAboutUsRaw(locale);
   const initialData = normalizeAboutUsResponse(raw);
 
-  return <AboutUsPageClient initialData={initialData} locale={locale} />;
+  return <AboutUsContent data={initialData} locale={locale} />;
 }
 

@@ -8,6 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
+import { getAppTheme } from "@/theme/theme";
 
 function createEmotionCache({ key, direction }) {
   const cache = createCache({
@@ -22,6 +23,11 @@ function createEmotionCache({ key, direction }) {
 }
 
 export default function ThemeRegistry({ children, direction, theme }) {
+  const computedTheme = React.useMemo(
+    () => getAppTheme({ direction: direction || "ltr" }),
+    [direction]
+  );
+
   const { cache, flush } = React.useMemo(() => {
     const cache = createEmotionCache({ key: "mui", direction });
     const prevInsert = cache.insert;
@@ -63,7 +69,7 @@ export default function ThemeRegistry({ children, direction, theme }) {
 
   return (
     <CacheProvider value={cache}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={computedTheme}>
         <CssBaseline />
         {children}
       </ThemeProvider>

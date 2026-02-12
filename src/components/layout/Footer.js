@@ -1,10 +1,6 @@
-"use client";
-
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
-import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
@@ -24,14 +20,11 @@ export default function Footer({ locale }) {
           </Typography>
 
           <Stack direction="row" spacing={2}>
-            <Typography
-              variant="body2"
-              component={Link}
-              href={`/${locale}/about-us`}
-              style={{ textDecoration: "none" }}
-            >
-              About
-            </Typography>
+            <a href={`/${locale}/about-us`} style={{ textDecoration: "none" }}>
+              <Typography variant="body2" component="span">
+                About
+              </Typography>
+            </a>
           </Stack>
         </Stack>
       </Container>
