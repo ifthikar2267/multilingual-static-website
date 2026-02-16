@@ -1,20 +1,25 @@
+"use client";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Image from "next/image";
+import ReactCountryFlag from "react-country-flag";
+import { usePathname } from "next/navigation";
 import ServerLinkButton from "@/components/navigation/ServerLinkButton";
-
-const HEADER_LOGO_URL = {
-  brandLogo: {
-    url: "https://alm-biz-assets-dev.almosafer.com/discoversaudi_26961e0964.svg",
-    alt: "Discover Saudi Logo",
-  },
-};
+import { HEADER_LOGO_URL } from "../constants/logos";
 
 export default function Header({ locale }) {
+  const pathname = usePathname();
+
   const otherLocale = locale === "ar" ? "en" : "ar";
-  const switchHref = `/${otherLocale}/about-us`;
+
+  // replace current locale with other locale
+  const switchHref = pathname.replace(
+    `/${locale}`,
+    `/${otherLocale}`
+  );
 
   return (
     <AppBar position="sticky" elevation={0} color="transparent">
@@ -29,7 +34,7 @@ export default function Header({ locale }) {
         }}
       >
         {/* LOGO */}
-        <Box sx={{ flex: 1 }}>
+        <Box sx={{ flex: 1, px: { xs: 1, md: 40 } }}>
           <a href={`/${locale}/about-us`}>
             <Image
               src={HEADER_LOGO_URL.brandLogo.url}
@@ -43,8 +48,11 @@ export default function Header({ locale }) {
         </Box>
 
         {/* NAVIGATION */}
-        <Box sx={{ display: "flex", gap: 1 }}>
-          <ServerLinkButton href={`/${locale}/about-us`} color="inherit">
+        <Box sx={{ display: "flex", gap: 1, px: { xs: 1, md: 40 } }}>
+          <ServerLinkButton
+            href={`/${locale}/about-us`}
+            color="inherit"
+          >
             About Us
           </ServerLinkButton>
 
@@ -55,7 +63,17 @@ export default function Header({ locale }) {
             DMC
           </ServerLinkButton>
 
-          <Button component="a" href={switchHref} variant="outlined">
+          <Button
+            component="a"
+            href={switchHref}
+            variant="outlined"
+            sx={{ display: "flex", gap: 1 }}
+          >
+            <ReactCountryFlag
+              svg
+              countryCode={otherLocale === "ar" ? "SA" : "US"}
+              style={{ width: "1.5em", height: "1.5em" }}
+            />
             {otherLocale === "ar" ? "العربية" : "English"}
           </Button>
         </Box>

@@ -2,6 +2,8 @@ import Image from "next/image";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import { headingStyle } from "../styles/typography";
+import { imageHoverZoom } from "../styles/imageStyles";
 
 const parseSections = (text = "") => {
   const normalized = text.replace(/\\n/g, "\n");
@@ -57,7 +59,6 @@ export default function FeaturedCards({ cards }) {
                     p: { xs: 2, md: 3 },
                     position: "relative",
                     overflow: "hidden",
-                 
                   }}
                 >
                   <Grid container spacing={4} alignItems="stretch">
@@ -83,26 +84,19 @@ export default function FeaturedCards({ cards }) {
                         {card?.title && (
                           <Typography
                             variant="h5"
-                            sx={{
-                              fontFamily: "Gilroy-Bold",
-                              fontSize: "34px",
-                              fontWeight: 700,
-                              lineHeight: "52px",
-                              mb: 3,
-                              color: "#E04E39",
-                            }}
+                            sx={ headingStyle }
                           >
                             {card.title}
                           </Typography>
                         )}
 
                         {sections.map((section, index) => (
-                          <Box key={index} sx={{ mb: 2 }}>
+                          <Box key={`section-${index}`} sx={{ mb: 2 }}>
                             {section.title && (
                               <Typography
                                 sx={{
                                   fontFamily: "Gilroy-Semibold",
-                                  fontSize: 17,
+                                  fontSize: 16,
                                   lineHeight: "24px",
                                   fontWeight: 600,
                                   color: "#333",
@@ -147,14 +141,7 @@ export default function FeaturedCards({ cards }) {
                           borderRadius: "12px",
                           aspectRatio: "4 / 3",
                           overflow: "hidden",
-
-                          "& img": {
-                            transition: "transform 0.5s ease",
-                          },
-
-                          "&:hover img": {
-                            transform: "scale(1.06)",
-                          },
+                          ...imageHoverZoom,
                         }}
                       >
                         {card?.image?.url && (
